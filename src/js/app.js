@@ -79,6 +79,7 @@ App = {
         return adoptionInstance.getAdopters.call();
       })
       .then((adopters) => {
+        console.log(adopters);
         adopters.forEach((adopter, i) => {
           if (adopter !== "0x0000000000000000000000000000000000000000") {
             $(".panel-pet")

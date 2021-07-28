@@ -71,9 +71,27 @@ App = {
   },
 
   markAdopted: function () {
-    /*
-     * Replace me...
-     */
+    let adoptionInstance;
+
+    App.contracts.Adoption.deployed()
+      .then((instance) => {
+        adoptionInstance = instance;
+        return adoptionInstance.getAdopters.call();
+      })
+      .then((adopters) => {
+        adopters.forEach((adopter, i) => {
+          if (adopter !== "0x0000000000000000000000000000000000000000") {
+            $(".panel-pet")
+              .eq(i)
+              .find("button")
+              .text("Success")
+              .attr("disabled", true);
+          }
+        });
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   },
 
   handleAdopt: function (event) {

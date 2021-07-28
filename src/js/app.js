@@ -24,8 +24,6 @@ App = {
   },
 
   initWeb3: async function () {
-    console.log("initWeb3");
-
     // Modern dapp browsers...
     if (window.ethereum) {
       App.web3Provider = window.ethereum;
@@ -48,22 +46,27 @@ App = {
       );
     }
     web3 = new Web3(App.web3Provider);
-    console.log(web3);
 
     return App.initContract();
   },
 
   initContract: function () {
-    console.log("initContract");
-    /*
-     * Replace me...
-     */
+    $.getJSON("Adoption.json", (data) => {
+      // Get the necessary contract artifact file and instantiate it with @truffle/contract
+      const AdoptionArtifact = data;
+      App.contracts.Adoption = TruffleContract(AdoptionArtifact);
+
+      // Set the provider for our contract
+      App.contracts.Adoption.setProvider(App.web3Provider);
+
+      // User our contract to retrieve and mark the adopted pets
+      return App.markAdopted();
+    });
 
     return App.bindEvents();
   },
 
   bindEvents: function () {
-    console.log("bindEvents");
     $(document).on("click", ".btn-adopt", App.handleAdopt);
   },
 

@@ -24,6 +24,7 @@ App = {
   },
 
   initWeb3: async function () {
+    console.log("initWeb3");
     /*
      * Replace me...
      */
@@ -32,6 +33,7 @@ App = {
   },
 
   initContract: function () {
+    console.log("initContract");
     /*
      * Replace me...
      */
@@ -40,6 +42,7 @@ App = {
   },
 
   bindEvents: function () {
+    console.log("bindEvents");
     $(document).on("click", ".btn-adopt", App.handleAdopt);
   },
 

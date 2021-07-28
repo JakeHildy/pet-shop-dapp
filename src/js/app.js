@@ -99,9 +99,30 @@ App = {
 
     var petId = parseInt($(event.target).data("id"));
     console.log("handle adopt pet: ", petId);
-    /*
-     * Replace me...
-     */
+
+    let adoptionInstance;
+
+    web3.eth.getAccounts((error, accounts) => {
+      if (error) {
+        console.log(error);
+      }
+
+      const account = accounts[0];
+
+      App.contracts.Adoption.deployed()
+        .then((instance) => {
+          adoptionInstance = instance;
+
+          // Execute adopt as a transaction by sending account
+          return adoptionInstance.adopt(petId, { from: account });
+        })
+        .then((result) => {
+          return App.markAdopted();
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    });
   },
 };
 
